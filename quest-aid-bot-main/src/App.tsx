@@ -5,6 +5,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
+import { Canvas } from "@react-three/fiber";
+import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import CreatePlan from "./pages/CreatePlan";
@@ -32,37 +34,52 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
       <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/pricing" element={<Pricing />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/terms" element={<Terms />} />
+        <SmoothScrollProvider>
+          <Toaster />
+          <Sonner />
+          
+          {/* Global 3D Background Layer */}
+          <div className="fixed inset-0 z-0 pointer-events-none">
+            <Canvas>
+              <ambientLight intensity={0.5} />
+              <directionalLight position={[10, 10, 5]} intensity={1} />
+              {/* Scene will be injected here or controlled globally */}
+            </Canvas>
+          </div>
 
-            {/* Protected Routes */}
-            <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
-            <Route path="/create-plan" element={<ProtectedRoute><CreatePlan /></ProtectedRoute>} />
-            <Route path="/quiz" element={<ProtectedRoute><Quiz /></ProtectedRoute>} />
-            <Route path="/session" element={<ProtectedRoute><Session /></ProtectedRoute>} />
-            <Route path="/session/day" element={<ProtectedRoute><SessionDay /></ProtectedRoute>} />
-            <Route path="/review" element={<ProtectedRoute><Review /></ProtectedRoute>} />
-            <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
-            <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-            <Route path="/achievements" element={<ProtectedRoute><Achievements /></ProtectedRoute>} />
-            <Route path="/study-hours" element={<ProtectedRoute><StudyHours /></ProtectedRoute>} />
-            <Route path="/questions-answered" element={<ProtectedRoute><QuestionsAnswered /></ProtectedRoute>} />
-            <Route path="/average-score" element={<ProtectedRoute><AverageScore /></ProtectedRoute>} />
-            <Route path="/active-plans" element={<ProtectedRoute><ActivePlans /></ProtectedRoute>} />
+          {/* Main DOM Layer */}
+          <div className="relative z-10">
+            <BrowserRouter>
+              <Routes>
+                {/* Public Routes */}
+                <Route path="/" element={<Index />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/pricing" element={<Pricing />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/privacy" element={<Privacy />} />
+                <Route path="/terms" element={<Terms />} />
 
-            {/* Catch-All */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+                {/* Protected Routes */}
+                <Route path="/create-plan" element={<ProtectedRoute><CreatePlan /></ProtectedRoute>} />
+                <Route path="/quiz" element={<ProtectedRoute><Quiz /></ProtectedRoute>} />
+                <Route path="/session" element={<ProtectedRoute><Session /></ProtectedRoute>} />
+                <Route path="/session/day" element={<ProtectedRoute><SessionDay /></ProtectedRoute>} />
+                <Route path="/review" element={<ProtectedRoute><Review /></ProtectedRoute>} />
+                <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
+                <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+                <Route path="/achievements" element={<ProtectedRoute><Achievements /></ProtectedRoute>} />
+                <Route path="/study-hours" element={<ProtectedRoute><StudyHours /></ProtectedRoute>} />
+                <Route path="/questions-answered" element={<ProtectedRoute><QuestionsAnswered /></ProtectedRoute>} />
+                <Route path="/average-score" element={<ProtectedRoute><AverageScore /></ProtectedRoute>} />
+                <Route path="/active-plans" element={<ProtectedRoute><ActivePlans /></ProtectedRoute>} />
+
+                {/* Catch-All */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </div>
+        </SmoothScrollProvider>
       </TooltipProvider>
     </AuthProvider>
   </QueryClientProvider>

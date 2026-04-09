@@ -44,11 +44,12 @@ export default function Auth() {
       if (isLogin) {
         await login(formData.email, formData.password);
         toast.success("Welcome back! 🎉");
+        navigate("/");
       } else {
         await signup(formData.username, formData.email, formData.password);
         toast.success("Account created successfully! 🚀");
+        navigate("/active-plans");
       }
-      navigate("/");
     } catch (error: any) {
       toast.error(error.message || "Authentication failed");
     } finally {
