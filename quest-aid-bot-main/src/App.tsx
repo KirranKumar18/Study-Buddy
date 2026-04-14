@@ -37,7 +37,7 @@ const App = () => (
         <SmoothScrollProvider>
           <Toaster />
           <Sonner />
-          
+
           {/* Global 3D Background Layer */}
           <div className="fixed inset-0 z-0 pointer-events-none">
             <Canvas>

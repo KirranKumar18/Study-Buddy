@@ -27,7 +27,7 @@ export default function Auth() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!isLogin && formData.password !== formData.confirmPassword) {
       toast.error("Passwords don't match");
       return;
@@ -153,9 +153,9 @@ export default function Auth() {
               </div>
             )}
 
-            <Button 
-              type="submit" 
-              className="w-full gradient-primary text-white" 
+            <Button
+              type="submit"
+              className="w-full gradient-primary text-white"
               size="lg"
               disabled={isSubmitting}
             >
