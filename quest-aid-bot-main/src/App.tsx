@@ -14,7 +14,7 @@ import Quiz from "./pages/Quiz";
 import Session from "./pages/Session";
 import SessionDay from "./pages/SessionDay";
 import Review from "./pages/Review";
-import Auth from "./pages/Auth";
+
 import Analytics from "./pages/Analytics";
 import Profile from "./pages/Profile";
 import Achievements from "./pages/Achievements";
@@ -53,7 +53,7 @@ const App = () => (
               <Routes>
                 {/* Public Routes */}
                 <Route path="/" element={<Index />} />
-                <Route path="/auth" element={<Auth />} />
+
                 <Route path="/about" element={<About />} />
                 <Route path="/pricing" element={<Pricing />} />
                 <Route path="/contact" element={<Contact />} />

@@ -20,7 +20,7 @@ export const Header = ({ user }: HeaderProps) => {
   const handleLogout = async () => {
     await logout();
     toast.success("Logged out successfully");
-    navigate("/auth");
+    navigate("/");
   };
 
   return (
@@ -74,12 +74,12 @@ export const Header = ({ user }: HeaderProps) => {
           </div>
         ) : (
           <div className="flex items-center gap-3">
-            <Link to="/auth">
+            <Link to="/create-plan">
               <Button variant="ghost" className="hidden sm:inline-flex">
                 Sign In
               </Button>
             </Link>
-            <Link to="/auth">
+            <Link to="/create-plan">
               <Button className="gradient-primary text-white rounded-full hover:shadow-glow transition-smooth">
                 Get Started
               </Button>

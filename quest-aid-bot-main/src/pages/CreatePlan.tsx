@@ -82,8 +82,21 @@ export default function CreatePlan() {
 
       if (!response.ok) {
         // If the server returns an error, show it
-        const errorData = await response.json();
-        throw new Error(errorData.detail || "Failed to create study plan");
+        let errorMessage = "Failed to create study plan";
+        try {
+          // Only attempt to parse JSON if the response says it is JSON
+          const contentType = response.headers.get("content-type");
+          if (contentType && contentType.includes("application/json")) {
+            const errorData = await response.json();
+            errorMessage = errorData.detail || errorMessage;
+          } else {
+            // If it's not JSON (like a 502/504 error page), use status text
+            errorMessage = `Server Error: ${response.status} ${response.statusText}. Please ensure the backend is running.`;
+          }
+        } catch (e) {
+          console.error("Error parsing error response:", e);
+        }
+        throw new Error(errorMessage);
       }
 
       setProcessingStep("Building daily schedule...");

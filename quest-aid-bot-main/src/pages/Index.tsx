@@ -149,10 +149,8 @@ export default function Index() {
           StudyBuddy
         </div>
         <div className="flex items-center gap-4">
-          <Link to="/auth" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors hidden md:block">
-            Sign In
-          </Link>
-          <Link to="/auth" className="text-sm font-medium bg-[#3B3BF9] text-white px-5 py-2.5 rounded-full hover:shadow-lg hover:shadow-[#3B3BF9]/30 transition-all active:scale-95 duration-300">
+
+          <Link to="/create-plan" className="text-sm font-medium bg-[#3B3BF9] text-white px-5 py-2.5 rounded-full hover:shadow-lg hover:shadow-[#3B3BF9]/30 transition-all active:scale-95 duration-300">
             Get Started
           </Link>
         </div>
@@ -191,7 +189,7 @@ export default function Index() {
             </p>
 
             <div ref={buttonsRef} className="flex flex-wrap gap-4 mt-2">
-              <Link to="/auth" className="flex items-center gap-2 px-6 py-3.5 rounded-full bg-[#3B3BF9] text-white font-medium hover:shadow-xl hover:shadow-[#3B3BF9]/25 hover:-translate-y-1 transition-all duration-300">
+              <Link to="/create-plan" className="flex items-center gap-2 px-6 py-3.5 rounded-full bg-[#3B3BF9] text-white font-medium hover:shadow-xl hover:shadow-[#3B3BF9]/25 hover:-translate-y-1 transition-all duration-300">
                 Create Your Study Plan <ArrowRight size={18} />
               </Link>
               <button className="px-6 py-3.5 rounded-full bg-white border border-gray-200 text-gray-900 font-medium hover:bg-gray-50 hover:-translate-y-1 transition-all duration-300 shadow-sm">
@@ -336,7 +334,7 @@ export default function Index() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 items-center">
-              <Link to="/auth" className="relative overflow-hidden group bg-white text-[#3B3BF9] font-bold px-8 py-4 rounded-full shadow-xl hover:shadow-white/20 hover:scale-105 transition-all duration-300">
+              <Link to="/create-plan" className="relative overflow-hidden group bg-white text-[#3B3BF9] font-bold px-8 py-4 rounded-full shadow-xl hover:shadow-white/20 hover:scale-105 transition-all duration-300">
                 <span className="relative z-10 flex items-center gap-2">Get Started Free <ArrowRight size={18} /></span>
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-50 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 pointer-events-none" />
               </Link>

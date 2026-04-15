@@ -4,6 +4,7 @@ from jose import JWTError, jwt
 from passlib.context import CryptContext
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from sqlalchemy.future import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.config import settings
 from app.database import get_db
@@ -39,13 +40,32 @@ def create_refresh_token(user_id: int, expires_delta: Optional[timedelta] = None
     return token, expire
 
 # --- JWT Token Verification ---
-security = HTTPBearer()
+security = HTTPBearer(auto_error=False)
 
 async def get_current_user(
-    credentials: HTTPAuthorizationCredentials = Depends(security),
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security),
     db: AsyncSession = Depends(get_db)
 ) -> models.User:
-    """FastAPI dependency: decode access token and return the user."""
+    """
+    FastAPI dependency: decode access token and return the user.
+    BYPASS: If no token is provided, returns the first user in the database (Guest Mode).
+    """
+    if not credentials:
+        # Check if any user exists, otherwise create a guest user
+        result = await db.execute(select(models.User).limit(1))
+        user = result.scalars().first()
+        if not user:
+            # Create a default guest user if none exists
+            user = models.User(
+                username="guest",
+                email="guest@example.com",
+                hashed_password="bypassed_password"
+            )
+            db.add(user)
+            await db.commit()
+            await db.refresh(user)
+        return user
+
     token = credentials.credentials
     
     credentials_exception = HTTPException(
